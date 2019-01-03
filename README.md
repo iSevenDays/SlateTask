@@ -9,7 +9,10 @@ SlateTask
 
 In order to use Wi-Fi detect capability on iOS 12
 We need to add Wi-Fi capability from the documentation here https://stackoverflow.com/questions/50767946/systemconfiguration-captivenetwork-doesnt-work-on-ios-12
-Unfortunately, my Apple ID doesn't support this
+Unfortunately, my Apple ID doesn't support this.
+Then, you should edit WiFi network name.
+
+ServiceProvider.instance.geofenceService.startMonitoring(forRegion: monitoredRegion, inWiFiNetwork: "Apple")
 
 ![Inside](/Screenshots/inside.jpg?raw=true "Inside")
 
