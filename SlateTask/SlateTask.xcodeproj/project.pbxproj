@@ -13,6 +13,7 @@
 		146E71AA21DE06EC00D26AD2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 146E71A921DE06EC00D26AD2 /* Assets.xcassets */; };
 		146E71AD21DE06EC00D26AD2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 146E71AB21DE06EC00D26AD2 /* LaunchScreen.storyboard */; };
 		146E71B821DE06ED00D26AD2 /* SlateTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E71B721DE06ED00D26AD2 /* SlateTaskTests.swift */; };
+		146E71C621DE0BF800D26AD2 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E71C521DE0BF800D26AD2 /* LocationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		146E71B321DE06EC00D26AD2 /* SlateTaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SlateTaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		146E71B721DE06ED00D26AD2 /* SlateTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlateTaskTests.swift; sourceTree = "<group>"; };
 		146E71B921DE06ED00D26AD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		146E71C521DE0BF800D26AD2 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		146E71A121DE06EA00D26AD2 /* SlateTask */ = {
 			isa = PBXGroup;
 			children = (
+				146E71C221DE0BE300D26AD2 /* Domain */,
 				146E71A221DE06EA00D26AD2 /* AppDelegate.swift */,
 				146E71A421DE06EA00D26AD2 /* ViewController.swift */,
 				146E71A621DE06EA00D26AD2 /* Main.storyboard */,
@@ -94,6 +97,30 @@
 				146E71B921DE06ED00D26AD2 /* Info.plist */,
 			);
 			path = SlateTaskTests;
+			sourceTree = "<group>";
+		};
+		146E71C221DE0BE300D26AD2 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				146E71C321DE0BEA00D26AD2 /* Services */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		146E71C321DE0BEA00D26AD2 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				146E71C421DE0BEF00D26AD2 /* LocationService */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		146E71C421DE0BEF00D26AD2 /* LocationService */ = {
+			isa = PBXGroup;
+			children = (
+				146E71C521DE0BF800D26AD2 /* LocationService.swift */,
+			);
+			path = LocationService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				146E71A521DE06EA00D26AD2 /* ViewController.swift in Sources */,
+				146E71C621DE0BF800D26AD2 /* LocationService.swift in Sources */,
 				146E71A321DE06EA00D26AD2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
