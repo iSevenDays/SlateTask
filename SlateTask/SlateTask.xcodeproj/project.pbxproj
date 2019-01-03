@@ -14,6 +14,8 @@
 		146E71AD21DE06EC00D26AD2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 146E71AB21DE06EC00D26AD2 /* LaunchScreen.storyboard */; };
 		146E71B821DE06ED00D26AD2 /* SlateTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E71B721DE06ED00D26AD2 /* SlateTaskTests.swift */; };
 		146E71C621DE0BF800D26AD2 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E71C521DE0BF800D26AD2 /* LocationService.swift */; };
+		146E71C821DE180900D26AD2 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E71C721DE180900D26AD2 /* ServiceProvider.swift */; };
+		146E71CD21DE1B7200D26AD2 /* MonitoredRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E71CC21DE1B7200D26AD2 /* MonitoredRegion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 		146E71B721DE06ED00D26AD2 /* SlateTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlateTaskTests.swift; sourceTree = "<group>"; };
 		146E71B921DE06ED00D26AD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		146E71C521DE0BF800D26AD2 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		146E71C721DE180900D26AD2 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
+		146E71CC21DE1B7200D26AD2 /* MonitoredRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoredRegion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,7 @@
 		146E71C221DE0BE300D26AD2 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				146E71CA21DE1B6000D26AD2 /* DataModels */,
 				146E71C321DE0BEA00D26AD2 /* Services */,
 			);
 			path = Domain;
@@ -111,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				146E71C421DE0BEF00D26AD2 /* LocationService */,
+				146E71C721DE180900D26AD2 /* ServiceProvider.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -119,6 +125,22 @@
 			isa = PBXGroup;
 			children = (
 				146E71C521DE0BF800D26AD2 /* LocationService.swift */,
+			);
+			path = LocationService;
+			sourceTree = "<group>";
+		};
+		146E71CA21DE1B6000D26AD2 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				146E71CB21DE1B6600D26AD2 /* LocationService */,
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
+		146E71CB21DE1B6600D26AD2 /* LocationService */ = {
+			isa = PBXGroup;
+			children = (
+				146E71CC21DE1B7200D26AD2 /* MonitoredRegion.swift */,
 			);
 			path = LocationService;
 			sourceTree = "<group>";
@@ -224,9 +246,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				146E71C821DE180900D26AD2 /* ServiceProvider.swift in Sources */,
 				146E71A521DE06EA00D26AD2 /* ViewController.swift in Sources */,
 				146E71C621DE0BF800D26AD2 /* LocationService.swift in Sources */,
 				146E71A321DE06EA00D26AD2 /* AppDelegate.swift in Sources */,
+				146E71CD21DE1B7200D26AD2 /* MonitoredRegion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

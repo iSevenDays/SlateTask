@@ -9,13 +9,15 @@
 import Foundation
 import CoreLocation
 
-struct MonitoredRegion {
-	var monitoredRegionCenter: CLLocationCoordinate2D
-	var radius: CLLocationDistance
-	var identifier: String = "monitoredRegion"
+protocol LocationServiceObserver {
+	// locaiton manager may be a protocol in case we need some flexibility
+	func didUpdateLocation(locationManager: LocationService, location: CLLocation)
+	func didUpdateMonitoredRegionState(locationManager: LocationService, isInsideMonitoredRegion: Bool)
 }
 
 class LocationService: NSObject {
+
+	var observer: LocationServiceObserver?
 
 	private var locationManager = CLLocationManager()
 
@@ -25,6 +27,8 @@ class LocationService: NSObject {
 
 	// for test purpose this is the only one region we'll use
 	private var monitoredRegion: MonitoredRegion?
+	// this should be an array if we support multiple regions monitoring
+	// or convert MonitoredRegion to a class and add lastLocationState(inside, outside)
 	private var isInsideMonitoredRegion = false
 
 	override init() {
@@ -56,7 +60,7 @@ class LocationService: NSObject {
 			stopRegionsMonitoring()
 		}
 		monitoredRegion = region
-		let region = CLCircularRegion(center: region.monitoredRegionCenter, radius: region.radius, identifier: region.identifier)
+		let region = CLCircularRegion(center: region.regionCenter, radius: region.radius, identifier: region.identifier)
 		region.notifyOnExit = true
 		region.notifyOnEntry = true
 		locationManager.startMonitoring(for: region)
@@ -69,9 +73,12 @@ extension LocationService: CLLocationManagerDelegate {
 		guard locations.count != 0 else {
 			return
 		}
-		self.initialLocation = locations.last
-		self.lastLocation = locations.last
-
+		guard let newLocation = locations.last else { return }
+		self.initialLocation = newLocation
+		self.lastLocation = newLocation
+		DispatchQueue.main.async {
+			self.observer?.didUpdateLocation(locationManager: self, location: newLocation)
+		}
 	}
 
 	func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
@@ -82,8 +89,17 @@ extension LocationService: CLLocationManagerDelegate {
 		switch state {
 		case .inside:
 			isInsideMonitoredRegion = true
+			DispatchQueue.main.async { [weak self] in
+				guard let self = `self` else { return }
+				self.observer?.didUpdateMonitoredRegionState(locationManager: self, isInsideMonitoredRegion: self.isInsideMonitoredRegion)
+			}
+
 		case .outside:
 			isInsideMonitoredRegion = false
+			DispatchQueue.main.async { [weak self] in
+				guard let self = `self` else { return }
+				self.observer?.didUpdateMonitoredRegionState(locationManager: self, isInsideMonitoredRegion: self.isInsideMonitoredRegion)
+			}
 		case .unknown:
 			// we need to decide should we treat this as false or not
 			break
