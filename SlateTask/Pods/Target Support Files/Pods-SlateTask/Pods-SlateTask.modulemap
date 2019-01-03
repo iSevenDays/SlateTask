@@ -1,0 +1,6 @@
+framework module Pods_SlateTask {
+  umbrella header "Pods-SlateTask-umbrella.h"
+
+  export *
+  module * { export * }
+}

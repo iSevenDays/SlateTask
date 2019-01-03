@@ -16,6 +16,9 @@
 		146E71C621DE0BF800D26AD2 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E71C521DE0BF800D26AD2 /* LocationService.swift */; };
 		146E71C821DE180900D26AD2 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E71C721DE180900D26AD2 /* ServiceProvider.swift */; };
 		146E71CD21DE1B7200D26AD2 /* MonitoredRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E71CC21DE1B7200D26AD2 /* MonitoredRegion.swift */; };
+		146E71D021DE403200D26AD2 /* GeofenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E71CF21DE403200D26AD2 /* GeofenceService.swift */; };
+		146E71D321DE417D00D26AD2 /* WifiInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E71D221DE417D00D26AD2 /* WifiInfo.swift */; };
+		F9AE2DE5C749491A8D7147D3 /* Pods_SlateTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA449DCC49E92492FC15CDCD /* Pods_SlateTask.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,11 @@
 		146E71C521DE0BF800D26AD2 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		146E71C721DE180900D26AD2 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		146E71CC21DE1B7200D26AD2 /* MonitoredRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoredRegion.swift; sourceTree = "<group>"; };
+		146E71CF21DE403200D26AD2 /* GeofenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeofenceService.swift; sourceTree = "<group>"; };
+		146E71D221DE417D00D26AD2 /* WifiInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WifiInfo.swift; sourceTree = "<group>"; };
+		BC9A2BAF94901579904021E3 /* Pods-SlateTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlateTask.release.xcconfig"; path = "Pods/Target Support Files/Pods-SlateTask/Pods-SlateTask.release.xcconfig"; sourceTree = "<group>"; };
+		E383EBD1E207D96577870FFB /* Pods-SlateTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlateTask.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SlateTask/Pods-SlateTask.debug.xcconfig"; sourceTree = "<group>"; };
+		FA449DCC49E92492FC15CDCD /* Pods_SlateTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SlateTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9AE2DE5C749491A8D7147D3 /* Pods_SlateTask.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +77,8 @@
 				146E71A121DE06EA00D26AD2 /* SlateTask */,
 				146E71B621DE06ED00D26AD2 /* SlateTaskTests */,
 				146E71A021DE06EA00D26AD2 /* Products */,
+				7EB1967F9DCABBEC2F55FEB4 /* Pods */,
+				649112AAAC9F10A886B3B209 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -106,6 +117,7 @@
 		146E71C221DE0BE300D26AD2 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				146E71D121DE417300D26AD2 /* Helpers */,
 				146E71CA21DE1B6000D26AD2 /* DataModels */,
 				146E71C321DE0BEA00D26AD2 /* Services */,
 			);
@@ -115,6 +127,7 @@
 		146E71C321DE0BEA00D26AD2 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				146E71CE21DE402400D26AD2 /* GeofenceService */,
 				146E71C421DE0BEF00D26AD2 /* LocationService */,
 				146E71C721DE180900D26AD2 /* ServiceProvider.swift */,
 			);
@@ -145,6 +158,39 @@
 			path = LocationService;
 			sourceTree = "<group>";
 		};
+		146E71CE21DE402400D26AD2 /* GeofenceService */ = {
+			isa = PBXGroup;
+			children = (
+				146E71CF21DE403200D26AD2 /* GeofenceService.swift */,
+			);
+			path = GeofenceService;
+			sourceTree = "<group>";
+		};
+		146E71D121DE417300D26AD2 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				146E71D221DE417D00D26AD2 /* WifiInfo.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		649112AAAC9F10A886B3B209 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA449DCC49E92492FC15CDCD /* Pods_SlateTask.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7EB1967F9DCABBEC2F55FEB4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E383EBD1E207D96577870FFB /* Pods-SlateTask.debug.xcconfig */,
+				BC9A2BAF94901579904021E3 /* Pods-SlateTask.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -152,9 +198,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 146E71BC21DE06ED00D26AD2 /* Build configuration list for PBXNativeTarget "SlateTask" */;
 			buildPhases = (
+				A1EDDE9A8D8E5FD541E4C494 /* [CP] Check Pods Manifest.lock */,
 				146E719B21DE06EA00D26AD2 /* Sources */,
 				146E719C21DE06EA00D26AD2 /* Frameworks */,
 				146E719D21DE06EA00D26AD2 /* Resources */,
+				03FA401367EC9F7CE81F4C49 /* [CP] Embed Pods Frameworks */,
+				A73373E3AAC41BF299F15E8E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -241,6 +290,66 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		03FA401367EC9F7CE81F4C49 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SlateTask/Pods-SlateTask-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A1EDDE9A8D8E5FD541E4C494 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A73373E3AAC41BF299F15E8E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SlateTask/Pods-SlateTask-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		146E719B21DE06EA00D26AD2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -249,6 +358,8 @@
 				146E71C821DE180900D26AD2 /* ServiceProvider.swift in Sources */,
 				146E71A521DE06EA00D26AD2 /* ViewController.swift in Sources */,
 				146E71C621DE0BF800D26AD2 /* LocationService.swift in Sources */,
+				146E71D321DE417D00D26AD2 /* WifiInfo.swift in Sources */,
+				146E71D021DE403200D26AD2 /* GeofenceService.swift in Sources */,
 				146E71A321DE06EA00D26AD2 /* AppDelegate.swift in Sources */,
 				146E71CD21DE1B7200D26AD2 /* MonitoredRegion.swift in Sources */,
 			);
@@ -410,6 +521,7 @@
 		};
 		146E71BD21DE06ED00D26AD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E383EBD1E207D96577870FFB /* Pods-SlateTask.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -428,6 +540,7 @@
 		};
 		146E71BE21DE06ED00D26AD2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC9A2BAF94901579904021E3 /* Pods-SlateTask.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

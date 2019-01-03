@@ -39,7 +39,8 @@ class ViewController: UIViewController {
 		
 		textFieldRadius.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
 
-		ServiceProvider.instance.locationService.observer = self
+		ServiceProvider.instance.locationService.observers.addDelegate(self)
+		ServiceProvider.instance.geofenceService.observer = self
 
 		if let location = ServiceProvider.instance.locationService.lastLocation {
 			startTrackingNewGeofenceArea(inLocation: location)
@@ -66,7 +67,7 @@ class ViewController: UIViewController {
 
 		let monitoredRegion = MonitoredRegion(regionCenter: location.coordinate, radius: radius, identifier: "monitoredRegion")
 
-		ServiceProvider.instance.locationService.startMonitoring(forRegion: monitoredRegion)
+		ServiceProvider.instance.geofenceService.startMonitoring(forRegion: monitoredRegion, inWiFiNetwork: "Apple")
 	}
 
 	enum MapElement {
@@ -139,8 +140,10 @@ extension ViewController: LocationServiceObserver {
 		}
 		addOrUpdateCurrentLocationPin(location: location)
 	}
+}
 
-	func didUpdateMonitoredRegionState(locationManager: LocationService, isInsideMonitoredRegion: Bool) {
+extension ViewController: GeofenceServiceObserver {
+	func didUpdateMonitoredRegionState(geofenceService: GeofenceService, isInsideMonitoredRegion: Bool) {
 		stateText.text = isInsideMonitoredRegion ? "Inside" : "Outside"
 		stateText.backgroundColor = isInsideMonitoredRegion ? .green : .red
 	}

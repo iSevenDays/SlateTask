@@ -8,16 +8,21 @@
 
 import Foundation
 import CoreLocation
+import MulticastDelegateSwift
 
-protocol LocationServiceObserver {
-	// locaiton manager may be a protocol in case we need some flexibility
+protocol LocationServiceObserver: class {
+	// location should be a protocol to support unit tests
 	func didUpdateLocation(locationManager: LocationService, location: CLLocation)
 	func didUpdateMonitoredRegionState(locationManager: LocationService, isInsideMonitoredRegion: Bool)
 }
 
-class LocationService: NSObject {
+extension LocationServiceObserver {
+	func didUpdateLocation(locationManager: LocationService, location: CLLocation) {}
+	func didUpdateMonitoredRegionState(locationManager: LocationService, isInsideMonitoredRegion: Bool) {}
+}
 
-	var observer: LocationServiceObserver?
+class LocationService: NSObject {
+	var observers = MulticastDelegate<LocationServiceObserver>()
 
 	private var locationManager = CLLocationManager()
 
@@ -77,7 +82,9 @@ extension LocationService: CLLocationManagerDelegate {
 		self.initialLocation = newLocation
 		self.lastLocation = newLocation
 		DispatchQueue.main.async {
-			self.observer?.didUpdateLocation(locationManager: self, location: newLocation)
+			self.observers.invokeDelegates { (observer) in
+				observer.didUpdateLocation(locationManager: self, location: newLocation)
+			}
 		}
 	}
 
@@ -91,14 +98,18 @@ extension LocationService: CLLocationManagerDelegate {
 			isInsideMonitoredRegion = true
 			DispatchQueue.main.async { [weak self] in
 				guard let self = `self` else { return }
-				self.observer?.didUpdateMonitoredRegionState(locationManager: self, isInsideMonitoredRegion: self.isInsideMonitoredRegion)
+				self.observers.invokeDelegates { (observer) in
+					observer.didUpdateMonitoredRegionState(locationManager: self, isInsideMonitoredRegion: self.isInsideMonitoredRegion)
+				}
 			}
 
 		case .outside:
 			isInsideMonitoredRegion = false
 			DispatchQueue.main.async { [weak self] in
 				guard let self = `self` else { return }
-				self.observer?.didUpdateMonitoredRegionState(locationManager: self, isInsideMonitoredRegion: self.isInsideMonitoredRegion)
+				self.observers.invokeDelegates { observer in
+					observer.didUpdateMonitoredRegionState(locationManager: self, isInsideMonitoredRegion: self.isInsideMonitoredRegion)
+				}
 			}
 		case .unknown:
 			// we need to decide should we treat this as false or not

@@ -1,0 +1,12 @@
+PODS:
+  - MulticastDelegateSwift (2.1.1)
+
+DEPENDENCIES:
+  - MulticastDelegateSwift
+
+SPEC CHECKSUMS:
+  MulticastDelegateSwift: 93eb077c24f50574b3f8a3f23bf71be6de6e3b41
+
+PODFILE CHECKSUM: 1680196b8e6ecaa63df4364b76a67526ea713055
+
+COCOAPODS: 1.2.0.rc.1

@@ -14,5 +14,10 @@ class ServiceProvider {
 	static let instance = ServiceProvider()
 
 	let locationService = LocationService()
+	var geofenceService: GeofenceService!
+
+	init() {
+		geofenceService = GeofenceService(locationService: locationService)
+	}
 
 }
