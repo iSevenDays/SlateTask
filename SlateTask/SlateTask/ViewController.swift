@@ -10,42 +10,73 @@ import UIKit
 import MapKit
 
 // 1. Set initial location or wait
+// 2. Start tracking default geofence area with the default radius
+// 3. When map is moved, update geofence area
+// 4. Current location pin location is set in simulator debug settings (Simulator - Debug - Location - Custom location)
 class ViewController: UIViewController {
 
 	@IBOutlet var mapView: MKMapView!
 	@IBOutlet weak var textFieldRadius: UITextField!
-	// inside/outside
+	// Shows label with text "inside" or "outside"
 	@IBOutlet weak var stateText: UILabel!
 
-	var mapLocation: CLLocation?
-	var circleOverlay: MKCircle?
-	var pinOverlay: MKPointAnnotation?
+	var geofenceLocation: CLLocation? {
+		didSet {
+			if let location = geofenceLocation {
+				addOrUpdateGeofenceCircleOverlay(location: location)
+			}
+		}
+	}
+	
+	var geofenceLocationCircleOverlay: MKCircle?
+	var currentLocationPinOverlay: MKPointAnnotation?
 	var monitoredRegion: MonitoredRegion?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		self.mapView.delegate = self
+		textFieldRadius.delegate = self
+		
 		textFieldRadius.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
 
 		ServiceProvider.instance.locationService.observer = self
+
 		if let location = ServiceProvider.instance.locationService.lastLocation {
-			addOrUpdateCircleOverlay(location: location)
-			mapLocation = location
-		} // else we just wait for location
+			startTrackingNewGeofenceArea(inLocation: location)
+		}
+
 	}
 
-
-	private func updateViewForNewSelectedLocation(_ location: CLLocation) {
-		addOrUpdateCurrentLocationPin(location: location)
-		addOrUpdateCircleOverlay(location: location)
+	@IBAction func showCurrentLocation(_ sender: Any) {
+		if let currentLocationPinOverlay = currentLocationPinOverlay {
+			mapView.showAnnotations([currentLocationPinOverlay], animated: true)
+		}
 	}
 
-	func updateTrackingForNewSelectedLocation(_ location: CLLocation) {
-		updateViewForNewSelectedLocation(location)
+	@IBAction func showGeofenceLocation(_ sender: Any) {
+		if let geofenceLocationCircleOverlay = geofenceLocationCircleOverlay {
+			showVisibleRect(forMapElement: .circle(geofenceLocationCircleOverlay))
+		}
+	}
 
+	// Start tracking new geofence area with radius from text field input
+	func startTrackingNewGeofenceArea(inLocation location: CLLocation) {
 		let radius = getRadiusFromTextView()
+		addOrUpdateGeofenceCircleOverlay(location: location)
+
 		let monitoredRegion = MonitoredRegion(regionCenter: location.coordinate, radius: radius, identifier: "monitoredRegion")
 
 		ServiceProvider.instance.locationService.startMonitoring(forRegion: monitoredRegion)
+	}
+
+	enum MapElement {
+		case circle(MKCircle)
+	}
+	func showVisibleRect(forMapElement element: MapElement) {
+		switch element {
+		case .circle(let circle):
+			mapView.visibleMapRect = mapView.mapRectThatFits(circle.boundingMapRect, edgePadding: UIEdgeInsets.init(top: 5, left: 5, bottom: 5, right: 5))
+		}
 	}
 
 	func getRadiusFromTextView() -> CLLocationDistance {
@@ -61,7 +92,7 @@ class ViewController: UIViewController {
 
 	@objc func textFieldDidChange(_ textField: UITextField) {
 		if let location = ServiceProvider.instance.locationService.lastLocation {
-			addOrUpdateCircleOverlay(location: location)
+			addOrUpdateGeofenceCircleOverlay(location: location)
 		}
 	}
 }
@@ -76,86 +107,87 @@ extension ViewController: MKMapViewDelegate {
 			circle.lineWidth = 1
 			return circle
 		} else {
-			fatalError("Other renderes are not implemented")
+			fatalError("Other renderers are not implemented")
 		}
 	}
 
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-
 		if annotation is MKUserLocation {
 			return nil
 		}
 		let reuseId = "pinOverlay"
+		let pav = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+		pav.isDraggable = true
+		pav.canShowCallout = true
+		pav.animatesDrop = true
 
-		var pav:MKPinAnnotationView?
-		if (pav == nil)
-		{
-			pav = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-			pav?.isDraggable = true
-			pav?.canShowCallout = true;
-			pav?.animatesDrop = true
-		}
-		else
-		{
-			pav?.annotation = annotation;
-		}
 		return pav
 	}
 
 	func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
 		let newCoordinate = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
-		updateTrackingForNewSelectedLocation(newCoordinate)
+		geofenceLocation = newCoordinate
+		startTrackingNewGeofenceArea(inLocation: newCoordinate)
 	}
 }
 
 extension ViewController: LocationServiceObserver {
 	func didUpdateLocation(locationManager: LocationService, location: CLLocation) {
-		if mapLocation == nil {
-			updateTrackingForNewSelectedLocation(location)
-			mapLocation = location
+		if geofenceLocation == nil {
+			startTrackingNewGeofenceArea(inLocation: location)
+			geofenceLocation = location
 		}
+		addOrUpdateCurrentLocationPin(location: location)
 	}
 
 	func didUpdateMonitoredRegionState(locationManager: LocationService, isInsideMonitoredRegion: Bool) {
 		stateText.text = isInsideMonitoredRegion ? "Inside" : "Outside"
+		stateText.backgroundColor = isInsideMonitoredRegion ? .green : .red
 	}
 }
 
 // Circle view
 extension ViewController {
-	func addOrUpdateCircleOverlay(location: CLLocation) {
-		if let circle = self.circleOverlay  {
-			mapView.removeOverlay(circle)
+	func addOrUpdateGeofenceCircleOverlay(location: CLLocation) {
+		if let mapCircle = self.geofenceLocationCircleOverlay  {
+			mapView.removeOverlay(mapCircle)
 		}
-		addRadiusCircle(location: location)
+		addGeofenceRadiusCircle(location: location)
 	}
-	private func addRadiusCircle(location: CLLocation){
-		self.mapView.delegate = self
+	private func addGeofenceRadiusCircle(location: CLLocation){
+
 		let circle = MKCircle(center: location.coordinate, radius: getRadiusFromTextView())
-		self.circleOverlay = circle
+		self.geofenceLocationCircleOverlay = circle
 		mapView.addOverlay(circle)
-		mapView.visibleMapRect = mapView.mapRectThatFits(circle.boundingMapRect, edgePadding: UIEdgeInsets.init(top: 5, left: 5, bottom: 5, right: 5))
 	}
 }
 
 // Current Location Pin
 extension ViewController {
 	func addOrUpdateCurrentLocationPin(location: CLLocation) {
-		if let pin = pinOverlay {
+		if let pin = currentLocationPinOverlay {
 			pin.coordinate = location.coordinate
 		} else {
 			addCurrentLocationPin(location: location)
 		}
 	}
+
 	private func addCurrentLocationPin(location: CLLocation) {
-		if let pin = pinOverlay {
+		if let pin = currentLocationPinOverlay {
 			pin.coordinate = location.coordinate
 		} else {
 			let pin =  MKPointAnnotation()
 			pin.coordinate = location.coordinate
 			pin.title = "Selected location"
 			mapView.addAnnotation(pin)
-			pinOverlay = pin
+			currentLocationPinOverlay = pin
 		}
+	}
+}
+
+extension ViewController: UITextFieldDelegate {
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		return true
 	}
 }
