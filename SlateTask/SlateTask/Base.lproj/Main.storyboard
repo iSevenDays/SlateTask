@@ -37,7 +37,7 @@
                                 </connections>
                             </textField>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="TuF-6k-A5k">
-                                <rect key="frame" x="0.0" y="121" width="375" height="546"/>
+                                <rect key="frame" x="0.0" y="155" width="375" height="512"/>
                             </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="StateText" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jqD-XO-PeZ">
                                 <rect key="frame" x="284" y="40" width="71" height="21"/>
@@ -45,17 +45,35 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nv3-A6-a2A">
+                                <rect key="frame" x="205" y="73" width="150" height="30"/>
+                                <state key="normal" title="Show current location"/>
+                                <connections>
+                                    <action selector="showCurrentLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kp5-gD-kRh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3t3-n2-MiL">
+                                <rect key="frame" x="184" y="113" width="171" height="30"/>
+                                <state key="normal" title="Show Geofence Location"/>
+                                <connections>
+                                    <action selector="showGeofenceLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a7A-vh-Iv9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="HQI-J0-i2y" firstAttribute="leading" secondItem="oEi-EC-LnN" secondAttribute="leading" id="04o-gg-67Z"/>
                             <constraint firstItem="TuF-6k-A5k" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6h0-fM-qvK"/>
+                            <constraint firstItem="3t3-n2-MiL" firstAttribute="trailing" secondItem="nv3-A6-a2A" secondAttribute="trailing" id="JCx-Ds-nTJ"/>
                             <constraint firstItem="HQI-J0-i2y" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="LUf-X1-2bf"/>
                             <constraint firstItem="HQI-J0-i2y" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="NOb-Q8-bTV"/>
                             <constraint firstItem="oEi-EC-LnN" firstAttribute="top" secondItem="HQI-J0-i2y" secondAttribute="bottom" constant="12" id="RFZ-OC-RK8"/>
-                            <constraint firstItem="TuF-6k-A5k" firstAttribute="top" secondItem="oEi-EC-LnN" secondAttribute="bottom" constant="16" id="RZt-Ki-VaT"/>
+                            <constraint firstItem="TuF-6k-A5k" firstAttribute="top" secondItem="oEi-EC-LnN" secondAttribute="bottom" constant="50" id="RZt-Ki-VaT"/>
+                            <constraint firstItem="nv3-A6-a2A" firstAttribute="trailing" secondItem="jqD-XO-PeZ" secondAttribute="trailing" id="Shr-Nt-AHN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="TuF-6k-A5k" secondAttribute="bottom" id="dQM-yO-ZVv"/>
+                            <constraint firstItem="3t3-n2-MiL" firstAttribute="top" secondItem="nv3-A6-a2A" secondAttribute="bottom" constant="10" id="kYx-ei-gSx"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jqD-XO-PeZ" secondAttribute="trailing" constant="20" id="ldV-yG-vvJ"/>
+                            <constraint firstItem="nv3-A6-a2A" firstAttribute="top" secondItem="jqD-XO-PeZ" secondAttribute="bottom" constant="12" id="mOh-um-GWh"/>
                             <constraint firstItem="jqD-XO-PeZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="ryt-SH-Q3H"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TuF-6k-A5k" secondAttribute="trailing" id="ved-H8-CMf"/>
                         </constraints>
